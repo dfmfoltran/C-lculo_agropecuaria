@@ -1,125 +1,105 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Simulador de Preços - Revenda Agrícola</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 40px;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            color: #2e7d32;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 30px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
-        th {
-            background-color: #4caf50;
-            color: white;
-        }
-        input {
-            width: 100%;
-            padding: 6px;
-            box-sizing: border-box;
-        }
-        .resultado {
-            margin-top: 40px;
-            padding: 20px;
-            background: #e8f5e9;
-            border: 1px solid #c8e6c9;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>Simulador de Preço de Revenda</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+    th { background: #f0f0f0; }
+    .highlight { background: #e6ffe6; font-weight: bold; }
+    input, select { width: 100%; padding: 4px; }
+  </style>
 </head>
 <body>
-    <h1>Simulador de Preços de Revenda Agrícola</h1>
-    <table>
-        <tr>
-            <th>Tipo de Produto</th>
-            <th>Quantidade (toneladas)</th>
-            <th>Preço por Tonelada (R$)</th>
-            <th>Custo Frete</th>
-            <th>Custo Armazenagem</th>
-            <th>Custo Embalagem (R$1,90/un)</th>
-            <th>Custo Etiqueta (R$0,60/un)</th>
-            <th>ICMS (%)</th>
-            <th>Preço Concorrente 1 (R$/saca)</th>
-            <th>Preço Concorrente 2 (R$/saca)</th>
-            <th>Saca (kg)</th>
-            <th>% Saca 1</th>
-            <th>% Saca 2</th>
-        </tr>
-        <tr>
-            <td><input placeholder="Ex: Milho"></td>
-            <td><input type="number" id="quantidade" value="10"></td>
-            <td><input type="number" id="preco_tonelada" value="800"></td>
-            <td><input type="number" id="frete" value="500"></td>
-            <td><input type="number" id="armazenagem" value="200"></td>
-            <td><input type="number" id="embalagem" value="1.90" disabled></td>
-            <td><input type="number" id="etiqueta" value="0.60" disabled></td>
-            <td><input type="number" id="icms" value="6"></td>
-            <td><input type="number" id="conc1" value="90"></td>
-            <td><input type="number" id="conc2" value="92"></td>
-            <td><input type="number" id="peso_saca" value="50"></td>
-            <td><input type="number" id="perc_saca1" value="60"></td>
-            <td><input type="number" id="perc_saca2" value="40"></td>
-        </tr>
-    </table>
-    <div class="resultado" id="resultado">
-        <h2>Resultado:</h2>
-        <p id="calc_output">Preencha os campos para ver o resultado.</p>
-    </div>
+  <h2>Simulador de Preço de Revenda</h2>
+  <div>
+    <label>Produto: <input id="produto" value="Milho" /></label><br/>
+    <label>Quantidade (ton): <input id="quant" type="number" value="10" /></label><br/>
+    <label>Preço/Tonelada (R$): <input id="precoTon" type="number" value="1200" /></label><br/>
+    <label>Frete (R$): <input id="frete" type="number" value="800" /></label><br/>
+    <label>Armazenagem (R$): <input id="armazenagem" type="number" value="500" /></label><br/>
+    <label>Tipo de saca 1:
+      <select id="saca1">
+        <option value="25">25kg</option>
+        <option value="50">50kg</option>
+        <option value="60" selected>60kg</option>
+      </select>
+    </label>
+    <label>% de divisão 1: <input id="p1" type="number" value="60" /></label><br/>
+    <label>Tipo de saca 2:
+      <select id="saca2">
+        <option value="">--</option>
+        <option value="25">25kg</option>
+        <option value="50">50kg</option>
+        <option value="60">60kg</option>
+      </select>
+    </label>
+    <label>% de divisão 2: <input id="p2" type="number" value="40" /></label><br/>
+    <label>Concorrente 1 – Preço (R$/saca): <input id="c1" type="number" value="48" /></label><br/>
+    <label>Concorrente 2 – Preço (R$/saca): <input id="c2" type="number" value="50" /></label><br/>
+    <label>ICMS destino:
+      <select id="icms">
+        <option value="6">SP – 6%</option>
+        <option value="7">RJ – 7%</option>
+        <option value="7">MG – 7%</option>
+      </select>
+    </label>
+    <button onclick="calcular()">Calcular</button>
+  </div>
 
-    <script>
-        const inputs = document.querySelectorAll("input");
-        inputs.forEach(input => input.addEventListener("input", calcular));
+  <table id="resultado">
+    <thead>
+      <tr>
+        <th>Produto</th><th>Ton</th><th>Sacas Totais</th><th>Custo/saca (R$)</th>
+        <th>C/ ICMS (R$)</th><th>Conc1</th><th>Conc2</th><th class="highlight">Lucro R$</th><th class="highlight">Margem %</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
-        function calcular() {
-            let qtd = parseFloat(document.getElementById("quantidade").value) || 0;
-            let preco = parseFloat(document.getElementById("preco_tonelada").value) || 0;
-            let frete = parseFloat(document.getElementById("frete").value) || 0;
-            let armazenagem = parseFloat(document.getElementById("armazenagem").value) || 0;
-            let icms = parseFloat(document.getElementById("icms").value) || 0;
-            let conc1 = parseFloat(document.getElementById("conc1").value) || 0;
-            let conc2 = parseFloat(document.getElementById("conc2").value) || 0;
-            let pesoSaca = parseFloat(document.getElementById("peso_saca").value) || 50;
-            let perc1 = parseFloat(document.getElementById("perc_saca1").value) || 0;
-            let perc2 = parseFloat(document.getElementById("perc_saca2").value) || 0;
-            let custoEmbalagem = 1.90;
-            let custoEtiqueta = 0.60;
+<script>
+function calcular() {
+  const prod = document.getElementById('produto').value;
+  const qt = parseFloat(document.getElementById('quant').value);
+  const precoTon = parseFloat(document.getElementById('precoTon').value);
+  const frete = parseFloat(document.getElementById('frete').value);
+  const arma = parseFloat(document.getElementById('armazenagem').value);
+  const s1 = parseFloat(document.getElementById('saca1').value);
+  const p1 = parseFloat(document.getElementById('p1').value) / 100;
+  const s2 = document.getElementById('saca2').value ? parseFloat(document.getElementById('saca2').value) : null;
+  const p2 = s2 ? (parseFloat(document.getElementById('p2').value) / 100) : 0;
+  const c1 = parseFloat(document.getElementById('c1').value);
+  const c2 = parseFloat(document.getElementById('c2').value);
+  const icms = parseFloat(document.getElementById('icms').value) / 100;
 
-            let total_kg = qtd * 1000;
-            let total_sacas = total_kg / pesoSaca;
-            let total_embalagem = total_sacas * custoEmbalagem;
-            let total_etiqueta = total_sacas * custoEtiqueta;
+  const totalKg = qt * 1000;
+  let qtdSacas1 = (totalKg * p1) / s1;
+  let qtdSacas2 = s2 ? (totalKg * p2) / s2 : 0;
+  const totalSacas = qtdSacas1 + qtdSacas2;
+  const embal = totalSacas * 1.9;
+  const etiqu = totalSacas * 0.6;
+  const custoTotal = qt*precoTon + frete + arma + embal + etiqu;
+  const custoPorSaca = custoTotal / totalSacas;
+  const finalICMS = custoPorSaca * (1 + icms);
+  const avgConc = Math.min(c1, c2);
+  const lucro = avgConc - finalICMS;
+  const margem = (lucro / finalICMS) * 100;
 
-            let custo_total = (qtd * preco) + frete + armazenagem + total_embalagem + total_etiqueta;
-            let custo_icms = custo_total * (icms / 100);
-            let custo_final = custo_total + custo_icms;
-            let preco_saca = custo_final / total_sacas;
-
-            let resultado = `
-                <strong>Preço médio por saca:</strong> R$ ${preco_saca.toFixed(2)} <br>
-                <strong>Preço concorrente 1:</strong> R$ ${conc1} <br>
-                <strong>Preço concorrente 2:</strong> R$ ${conc2} <br>
-                <strong>Lucro Concorrente 1:</strong> R$ ${(conc1 - preco_saca).toFixed(2)} (${(((conc1 - preco_saca)/preco_saca)*100).toFixed(1)}%) <br>
-                <strong>Lucro Concorrente 2:</strong> R$ ${(conc2 - preco_saca).toFixed(2)} (${(((conc2 - preco_saca)/preco_saca)*100).toFixed(1)}%)
-            `;
-
-            document.getElementById("calc_output").innerHTML = resultado;
-        }
-
-        calcular();
-    </script>
+  const tbody = document.querySelector('#resultado tbody');
+  tbody.innerHTML = `<tr>
+    <td>${prod}</td>
+    <td>${qt}</td>
+    <td>${totalSacas.toFixed(0)}</td>
+    <td>${custoPorSaca.toFixed(2)}</td>
+    <td>${finalICMS.toFixed(2)}</td>
+    <td>${c1.toFixed(2)}</td>
+    <td>${c2.toFixed(2)}</td>
+    <td class="highlight">${lucro.toFixed(2)}</td>
+    <td class="highlight">${margem.toFixed(2)}%</td>
+  </tr>`;
+}
+</script>
 </body>
 </html>
