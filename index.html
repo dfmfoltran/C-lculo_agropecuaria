@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simulador de Preço de Revenda</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
+    th { background: #f0f0f0; }
+    .highlight { background: #e6ffe6; font-weight: bold; }
+    input, select { width: 100%; padding: 4px; }
+  </style>
+</head>
+<body>
+  <h2>Simulador de Preço de Revenda</h2>
+  <div>
+    <label>Produto: <input id="produto" value="Milho" /></label><br/>
+    <label>Quantidade (ton): <input id="quant" type="number" value="10" /></label><br/>
+    <label>Preço/Tonelada (R$): <input id="precoTon" type="number" value="1200" /></label><br/>
+    <label>Frete (R$): <input id="frete" type="number" value="800" /></label><br/>
+    <label>Armazenagem (R$): <input id="armazenagem" type="number" value="500" /></label><br/>
+    <label>Tipo de saca 1:
+      <select id="saca1">
+        <option value="25">25kg</option>
+        <option value="50">50kg</option>
+        <option value="60" selected>60kg</option>
+      </select>
+    </label>
+    <label>% de divisão 1: <input id="p1" type="number" value="60" /></label><br/>
+    <label>Tipo de saca 2:
+      <select id="saca2">
+        <option value="">--</option>
+        <option value="25">25kg</option>
+        <option value="50">50kg</option>
+        <option value="60">60kg</option>
+      </select>
+    </label>
+    <label>% de divisão 2: <input id="p2" type="number" value="40" /></label><br/>
+    <label>Concorrente 1 – Preço (R$/saca): <input id="c1" type="number" value="48" /></label><br/>
+    <label>Concorrente 2 – Preço (R$/saca): <input id="c2" type="number" value="50" /></label><br/>
+    <label>ICMS destino:
+      <select id="icms">
+        <option value="6">SP – 6%</option>
+        <option value="7">RJ – 7%</option>
+        <option value="7">MG – 7%</option>
+      </select>
+    </label>
+    <button onclick="calcular()">Calcular</button>
+  </div>
+
+  <table id="resultado">
+    <thead>
+      <tr>
+        <th>Produto</th><th>Ton</th><th>Sacas Totais</th><th>Custo/saca (R$)</th>
+        <th>C/ ICMS (R$)</th><th>Conc1</th><th>Conc2</th><th class="highlight">Lucro R$</th><th class="highlight">Margem %</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+<script>
+function calcular() {
+  const prod = document.getElementById('produto').value;
+  const qt = parseFloat(document.getElementById('quant').value);
+  const precoTon = parseFloat(document.getElementById('precoTon').value);
+  const frete = parseFloat(document.getElementById('frete').value);
+  const arma = parseFloat(document.getElementById('armazenagem').value);
+  const s1 = parseFloat(document.getElementById('saca1').value);
+  const p1 = parseFloat(document.getElementById('p1').value) / 100;
+  const s2 = document.getElementById('saca2').value ? parseFloat(document.getElementById('saca2').value) : null;
+  const p2 = s2 ? (parseFloat(document.getElementById('p2').value) / 100) : 0;
+  const c1 = parseFloat(document.getElementById('c1').value);
+  const c2 = parseFloat(document.getElementById('c2').value);
+  const icms = parseFloat(document.getElementById('icms').value) / 100;
+
+  const totalKg = qt * 1000;
+  let qtdSacas1 = (totalKg * p1) / s1;
+  let qtdSacas2 = s2 ? (totalKg * p2) / s2 : 0;
+  const totalSacas = qtdSacas1 + qtdSacas2;
+  const embal = totalSacas * 1.9;
+  const etiqu = totalSacas * 0.6;
+  const custoTotal = qt*precoTon + frete + arma + embal + etiqu;
+  const custoPorSaca = custoTotal / totalSacas;
+  const finalICMS = custoPorSaca * (1 + icms);
+  const avgConc = Math.min(c1, c2);
+  const lucro = avgConc - finalICMS;
+  const margem = (lucro / finalICMS) * 100;
+
+  const tbody = document.querySelector('#resultado tbody');
+  tbody.innerHTML = `<tr>
+    <td>${prod}</td>
+    <td>${qt}</td>
+    <td>${totalSacas.toFixed(0)}</td>
+    <td>${custoPorSaca.toFixed(2)}</td>
+    <td>${finalICMS.toFixed(2)}</td>
+    <td>${c1.toFixed(2)}</td>
+    <td>${c2.toFixed(2)}</td>
+    <td class="highlight">${lucro.toFixed(2)}</td>
+    <td class="highlight">${margem.toFixed(2)}%</td>
+  </tr>`;
+}
+</script>
+</body>
+</html>
