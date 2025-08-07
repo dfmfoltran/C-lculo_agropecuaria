@@ -1,96 +1,155 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <title>Recomendação de Preços por Estado</title>
+  <meta charset="UTF-8">
+  <title>Calculadora de Preços</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    input { margin: 5px; padding: 5px; width: 80px; }
-    label { display: block; margin: 10px 0 5px; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-    th { background: #f0f0f0; }
-    .box { margin-bottom: 30px; }
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    input, label {
+      margin-bottom: 10px;
+      display: block;
+    }
+    .bloco {
+      margin-bottom: 30px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #999;
+      padding: 8px;
+      text-align: center;
+    }
+    th {
+      background-color: #eee;
+    }
   </style>
 </head>
 <body>
-  <h2>💰 Recomendação de Preços por Estado</h2>
 
-  <div class="box">
-    <label>Custo Total da Operação (R$): <input id="custoTotal" type="number" value="10000" /></label>
-    <label>Margem de Lucro Mínima (%): <input id="lucroMinimo" type="number" value="15" /></label>
+  <h2>🔢 Calculadora de Preço por Estado</h2>
+
+  <div class="bloco">
+    <h3>🔧 Custos e Parâmetros</h3>
+    <label>
+      Custo do Produto (R$):
+      <input type="number" id="custo" step="0.01">
+    </label>
+    <label>
+      Frete Médio (R$):
+      <input type="number" id="frete" step="0.01">
+    </label>
+    <label>
+      Margem mínima de lucro (%):
+      <input type="number" id="margemMinima" value="15" step="0.01">
+    </label>
   </div>
 
-  <div class="box">
-    <h3>Concorrente 1 (R$/saca):</h3>
-    <label>SP: <input id="c1_sp" type="number" value="52" /></label>
-    <label>RJ: <input id="c1_rj" type="number" value="57" /></label>
-    <label>MG: <input id="c1_mg" type="number" value="56" /></label>
-  </div>
-
-  <div class="box">
-    <h3>Concorrente 2 (R$/saca):</h3>
-    <label>SP: <input id="c2_sp" type="number" value="50" /></label>
-    <label>RJ: <input id="c2_rj" type="number" value="58" /></label>
-    <label>MG: <input id="c2_mg" type="number" value="54" /></label>
+  <div class="bloco">
+    <h3>📊 Preço dos Concorrentes</h3>
+    <label>
+      Concorrente SP (R$):
+      <input type="number" id="concorrenteSP" step="0.01">
+    </label>
+    <label>
+      Concorrente RJ (R$):
+      <input type="number" id="concorrenteRJ" step="0.01">
+    </label>
+    <label>
+      Concorrente MG (R$):
+      <input type="number" id="concorrenteMG" step="0.01">
+    </label>
   </div>
 
   <button onclick="calcularPrecosRecomendados()">Calcular Preços Recomendados</button>
 
-  <table id="resultado" style="display: none;">
-    <thead>
-      <tr>
-        <th>Estado</th>
-        <th>Preço Min. (R$)</th>
-        <th>Concorrente 1 (R$)</th>
-        <th>Concorrente 2 (R$)</th>
-        <th>Dif. Conc. 1 (R$)</th>
-        <th>Dif. Conc. 2 (R$)</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div id="resultado"></div>
 
   <script>
     function calcularPrecosRecomendados() {
-      const custoTotal = parseFloat(document.getElementById("custoTotal").value);
-      const margem = parseFloat(document.getElementById("lucroMinimo").value) / 100;
+      const custo = parseFloat(document.getElementById('custo').value) || 0;
+      const frete = parseFloat(document.getElementById('frete').value) || 0;
+      const margemMinima = parseFloat(document.getElementById('margemMinima').value) || 15;
 
-      const concorrentes = {
-        SP: [parseFloat(document.getElementById("c1_sp").value), parseFloat(document.getElementById("c2_sp").value)],
-        RJ: [parseFloat(document.getElementById("c1_rj").value), parseFloat(document.getElementById("c2_rj").value)],
-        MG: [parseFloat(document.getElementById("c1_mg").value), parseFloat(document.getElementById("c2_mg").value)]
-      };
+      const concorrenteSP = parseFloat(document.getElementById('concorrenteSP').value) || 0;
+      const concorrenteRJ = parseFloat(document.getElementById('concorrenteRJ').value) || 0;
+      const concorrenteMG = parseFloat(document.getElementById('concorrenteMG').value) || 0;
 
-      const impostos = {
-        SP: 0.06,
-        RJ: 0.12, // 6% + difal 6%
-        MG: 0.14  // 6% + difal 8%
-      };
+      // Impostos
+      const impostoSP = 0.06;
+      const impostoRJ = 0.06 + 0.18; // Simples + ICMS interestadual
+      const impostoMG = 0.06 + 0.12;
 
-      const tbody = document.querySelector("#resultado tbody");
-      tbody.innerHTML = "";
-
-      for (const estado in impostos) {
-        const imposto = impostos[estado];
-        const precoMinimo = custoTotal * (1 + imposto) * (1 + margem);
-        const [conc1, conc2] = concorrentes[estado];
-        const dif1 = (conc1 - precoMinimo).toFixed(2);
-        const dif2 = (conc2 - precoMinimo).toFixed(2);
-
-        const row = `<tr>
-          <td>${estado}</td>
-          <td>${precoMinimo.toFixed(2)}</td>
-          <td>${conc1.toFixed(2)}</td>
-          <td>${conc2.toFixed(2)}</td>
-          <td>${dif1}</td>
-          <td>${dif2}</td>
-        </tr>`;
-
-        tbody.innerHTML += row;
+      // Preço mínimo necessário (custo + frete + margem mínima + impostos)
+      function calcularPrecoFinal(custo, frete, impostoTotal, margem) {
+        const custoTotal = custo + frete;
+        const precoLiquido = custoTotal * (1 + margem / 100);
+        const precoFinal = precoLiquido / (1 - impostoTotal);
+        return precoFinal;
       }
 
-      document.getElementById("resultado").style.display = "table";
+      const precoSP = calcularPrecoFinal(custo, frete, impostoSP, margemMinima);
+      const precoRJ = calcularPrecoFinal(custo, frete, impostoRJ, margemMinima);
+      const precoMG = calcularPrecoFinal(custo, frete, impostoMG, margemMinima);
+
+      // Lucro com base no preço dos concorrentes
+      function calcularLucro(precoVenda, custo, frete, imposto) {
+        const receitaLiquida = precoVenda * (1 - imposto);
+        const custoTotal = custo + frete;
+        return receitaLiquida - custoTotal;
+      }
+
+      const lucroSP = calcularLucro(concorrenteSP, custo, frete, impostoSP);
+      const lucroRJ = calcularLucro(concorrenteRJ, custo, frete, impostoRJ);
+      const lucroMG = calcularLucro(concorrenteMG, custo, frete, impostoMG);
+
+      const resultadoHTML = `
+        <h3>📄 Resultado</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Estado</th>
+              <th>Preço Mínimo Recomendado (R$)</th>
+              <th>Preço Concorrente (R$)</th>
+              <th>Lucro com Concorrente (R$)</th>
+              <th>Lucro com Recomendado (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>SP</td>
+              <td>${precoSP.toFixed(2)}</td>
+              <td>${concorrenteSP.toFixed(2)}</td>
+              <td>${lucroSP.toFixed(2)}</td>
+              <td>${calcularLucro(precoSP, custo, frete, impostoSP).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>RJ</td>
+              <td>${precoRJ.toFixed(2)}</td>
+              <td>${concorrenteRJ.toFixed(2)}</td>
+              <td>${lucroRJ.toFixed(2)}</td>
+              <td>${calcularLucro(precoRJ, custo, frete, impostoRJ).toFixed(2)}</td>
+            </tr>
+            <tr>
+              <td>MG</td>
+              <td>${precoMG.toFixed(2)}</td>
+              <td>${concorrenteMG.toFixed(2)}</td>
+              <td>${lucroMG.toFixed(2)}</td>
+              <td>${calcularLucro(precoMG, custo, frete, impostoMG).toFixed(2)}</td>
+            </tr>
+          </tbody>
+        </table>
+      `;
+
+      document.getElementById('resultado').innerHTML = resultadoHTML;
     }
   </script>
 </body>
