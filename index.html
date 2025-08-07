@@ -2,104 +2,134 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Simulador de Preço de Revenda</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora de Preço - Agrícola</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-    th, td { padding: 8px; border: 1px solid #ccc; text-align: center; }
-    th { background: #f0f0f0; }
-    .highlight { background: #e6ffe6; font-weight: bold; }
-    input, select { width: 100%; padding: 4px; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .box {
+      background: #fff;
+      padding: 20px;
+      margin-bottom: 25px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .box h2 {
+      margin-top: 0;
+      font-size: 20px;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input {
+      padding: 8px;
+      width: 100%;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .result {
+      margin-top: 15px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 20px;
+      font-size: 16px;
+      background-color: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1a242f;
+    }
   </style>
 </head>
 <body>
-  <h2>Simulador de Preço de Revenda</h2>
-  <div>
-    <label>Produto: <input id="produto" value="Milho" /></label><br/>
-    <label>Quantidade (ton): <input id="quant" type="number" value="10" /></label><br/>
-    <label>Preço/Tonelada (R$): <input id="precoTon" type="number" value="1200" /></label><br/>
-    <label>Frete (R$): <input id="frete" type="number" value="800" /></label><br/>
-    <label>Armazenagem (R$): <input id="armazenagem" type="number" value="500" /></label><br/>
-    <label>Tipo de saca 1:
-      <select id="saca1">
-        <option value="25">25kg</option>
-        <option value="50">50kg</option>
-        <option value="60" selected>60kg</option>
-      </select>
-    </label>
-    <label>% de divisão 1: <input id="p1" type="number" value="60" /></label><br/>
-    <label>Tipo de saca 2:
-      <select id="saca2">
-        <option value="">--</option>
-        <option value="25">25kg</option>
-        <option value="50">50kg</option>
-        <option value="60">60kg</option>
-      </select>
-    </label>
-    <label>% de divisão 2: <input id="p2" type="number" value="40" /></label><br/>
-    <label>Concorrente 1 – Preço (R$/saca): <input id="c1" type="number" value="48" /></label><br/>
-    <label>Concorrente 2 – Preço (R$/saca): <input id="c2" type="number" value="50" /></label><br/>
-    <label>ICMS destino:
-      <select id="icms">
-        <option value="6">SP – 6%</option>
-        <option value="7">RJ – 7%</option>
-        <option value="7">MG – 7%</option>
-      </select>
-    </label>
-    <button onclick="calcular()">Calcular</button>
+
+  <h1>Calculadora de Preço por Estado</h1>
+
+  <div class="box">
+    <h2>🔢 Informações de Entrada</h2>
+    <label>Produto:</label>
+    <input type="text" id="produto" placeholder="Ex: Quiabo">
+
+    <label>Custo por tonelada (R$):</label>
+    <input type="number" id="custo" placeholder="Ex: 800">
+
+    <label>Frete por tonelada (R$):</label>
+    <input type="number" id="frete" placeholder="Ex: 200">
+
+    <label>Quantidade (toneladas):</label>
+    <input type="number" id="quantidade" placeholder="Ex: 10">
   </div>
 
-  <table id="resultado">
-    <thead>
-      <tr>
-        <th>Produto</th><th>Ton</th><th>Sacas Totais</th><th>Custo/saca (R$)</th>
-        <th>C/ ICMS (R$)</th><th>Conc1</th><th>Conc2</th><th class="highlight">Lucro R$</th><th class="highlight">Margem %</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <div class="box">
+    <h2>📈 Preços de Venda (por tonelada)</h2>
+    <label>Preço SP (R$):</label>
+    <input type="number" id="precoSP" placeholder="Ex: 1500">
 
-<script>
-function calcular() {
-  const prod = document.getElementById('produto').value;
-  const qt = parseFloat(document.getElementById('quant').value);
-  const precoTon = parseFloat(document.getElementById('precoTon').value);
-  const frete = parseFloat(document.getElementById('frete').value);
-  const arma = parseFloat(document.getElementById('armazenagem').value);
-  const s1 = parseFloat(document.getElementById('saca1').value);
-  const p1 = parseFloat(document.getElementById('p1').value) / 100;
-  const s2 = document.getElementById('saca2').value ? parseFloat(document.getElementById('saca2').value) : null;
-  const p2 = s2 ? (parseFloat(document.getElementById('p2').value) / 100) : 0;
-  const c1 = parseFloat(document.getElementById('c1').value);
-  const c2 = parseFloat(document.getElementById('c2').value);
-  const icms = parseFloat(document.getElementById('icms').value) / 100;
+    <label>Preço RJ (R$):</label>
+    <input type="number" id="precoRJ" placeholder="Ex: 1600">
 
-  const totalKg = qt * 1000;
-  let qtdSacas1 = (totalKg * p1) / s1;
-  let qtdSacas2 = s2 ? (totalKg * p2) / s2 : 0;
-  const totalSacas = qtdSacas1 + qtdSacas2;
-  const embal = totalSacas * 1.9;
-  const etiqu = totalSacas * 0.6;
-  const custoTotal = qt*precoTon + frete + arma + embal + etiqu;
-  const custoPorSaca = custoTotal / totalSacas;
-  const finalICMS = custoPorSaca * (1 + icms);
-  const avgConc = Math.min(c1, c2);
-  const lucro = avgConc - finalICMS;
-  const margem = (lucro / finalICMS) * 100;
+    <label>Preço MG (R$):</label>
+    <input type="number" id="precoMG" placeholder="Ex: 1550">
+  </div>
 
-  const tbody = document.querySelector('#resultado tbody');
-  tbody.innerHTML = `<tr>
-    <td>${prod}</td>
-    <td>${qt}</td>
-    <td>${totalSacas.toFixed(0)}</td>
-    <td>${custoPorSaca.toFixed(2)}</td>
-    <td>${finalICMS.toFixed(2)}</td>
-    <td>${c1.toFixed(2)}</td>
-    <td>${c2.toFixed(2)}</td>
-    <td class="highlight">${lucro.toFixed(2)}</td>
-    <td class="highlight">${margem.toFixed(2)}%</td>
-  </tr>`;
-}
-</script>
+  <div class="box">
+    <h2>🧮 Cálculo</h2>
+    <button onclick="calcular()">Calcular Lucro e Impostos</button>
+    
+    <div id="resultado" class="result"></div>
+  </div>
+
+  <script>
+    function calcular() {
+      const custo = parseFloat(document.getElementById('custo').value || 0);
+      const frete = parseFloat(document.getElementById('frete').value || 0);
+      const quantidade = parseFloat(document.getElementById('quantidade').value || 0);
+      const precoSP = parseFloat(document.getElementById('precoSP').value || 0);
+      const precoRJ = parseFloat(document.getElementById('precoRJ').value || 0);
+      const precoMG = parseFloat(document.getElementById('precoMG').value || 0);
+
+      const impostoSP = 0.06;
+      const impostoICMS = 0.04;
+
+      const custoTotal = custo + frete;
+
+      const lucroSP = (precoSP * (1 - impostoSP) - custoTotal) * quantidade;
+      const lucroRJ = (precoRJ * (1 - impostoSP - impostoICMS) - custoTotal) * quantidade;
+      const lucroMG = (precoMG * (1 - impostoSP - impostoICMS) - custoTotal) * quantidade;
+
+      const impostoSPTotal = precoSP * impostoSP * quantidade;
+      const impostoRJTotal = precoRJ * (impostoSP + impostoICMS) * quantidade;
+      const impostoMGTotal = precoMG * (impostoSP + impostoICMS) * quantidade;
+
+      document.getElementById('resultado').innerHTML = `
+        <h3>💰 Lucro Total por Estado:</h3>
+        <p>SP: R$ ${lucroSP.toFixed(2)}</p>
+        <p>RJ: R$ ${lucroRJ.toFixed(2)}</p>
+        <p>MG: R$ ${lucroMG.toFixed(2)}</p>
+        <h3>🧾 Impostos Totais:</h3>
+        <p>SP (6%): R$ ${impostoSPTotal.toFixed(2)}</p>
+        <p>RJ (6% + 4%): R$ ${impostoRJTotal.toFixed(2)}</p>
+        <p>MG (6% + 4%): R$ ${impostoMGTotal.toFixed(2)}</p>
+      `;
+    }
+  </script>
+
 </body>
 </html>
