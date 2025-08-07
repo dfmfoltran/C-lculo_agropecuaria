@@ -64,6 +64,60 @@ document.addEventListener("DOMContentLoaded", () => {
         <li><strong>MG:</strong> +8% DIFAL</li>
       </ul>
     </div>
+    <div class='box' id="box6">
+      <h2>Box 6: Preço por Saca com Impostos (SP, RJ, MG)</h2>
+      <div class="row g-3">
+        <div class="col-md-4"><label class="form-label">Preço/saca 25kg (SP)</label><input type="number" id="preco25SP" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 50kg (SP)</label><input type="number" id="preco50SP" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 60kg (SP)</label><input type="number" id="preco60SP" class="form-control" readonly /></div>
+
+        <div class="col-md-4"><label class="form-label">Preço/saca 25kg (RJ)</label><input type="number" id="preco25RJ" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 50kg (RJ)</label><input type="number" id="preco50RJ" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 60kg (RJ)</label><input type="number" id="preco60RJ" class="form-control" readonly /></div>
+
+        <div class="col-md-4"><label class="form-label">Preço/saca 25kg (MG)</label><input type="number" id="preco25MG" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 50kg (MG)</label><input type="number" id="preco50MG" class="form-control" readonly /></div>
+        <div class="col-md-4"><label class="form-label">Preço/saca 60kg (MG)</label><input type="number" id="preco60MG" class="form-control" readonly /></div>
+      </div>
+    </div>
+
+    <div class='box' id="box7">
+      <h2>Box 7: Margem de Lucro e Comparativo</h2>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Margem de lucro pretendida (%)</label>
+          <input type="number" id="margemLucro" class="form-control" step="0.1" />
+        </div>
+      </div>
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered">
+          <thead><tr><th></th><th>SP</th><th>RJ</th><th>MG</th></tr></thead>
+          <tbody>
+            <tr><td>Saca 25kg</td><td id="lucro25SP"></td><td id="lucro25RJ"></td><td id="lucro25MG"></td></tr>
+            <tr><td>Saca 50kg</td><td id="lucro50SP"></td><td id="lucro50RJ"></td><td id="lucro50MG"></td></tr>
+            <tr><td>Saca 60kg</td><td id="lucro60SP"></td><td id="lucro60RJ"></td><td id="lucro60MG"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class='box' id="box8">
+      <h2>Box 8: Lucro da Operação</h2>
+      <div class="row g-3">
+        <div class="col-md-6">
+          <label class="form-label">Lucro total estimado (SP)</label>
+          <input type="text" class="form-control" id="lucroTotalSP" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Lucro total estimado (RJ)</label>
+          <input type="text" class="form-control" id="lucroTotalRJ" readonly>
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Lucro total estimado (MG)</label>
+          <input type="text" class="form-control" id="lucroTotalMG" readonly>
+        </div>
+      </div>
+    </div>
   `;
 
   const quantTon = document.getElementById("quantTon");
