@@ -2,132 +2,150 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Calculadora de Preço - Agrícola</title>
+  <title>Recomendação de Preços</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      padding: 20px;
-      max-width: 800px;
-      margin: auto;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-    .box {
-      background: #fff;
-      padding: 20px;
-      margin-bottom: 25px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    .box h2 {
-      margin-top: 0;
-      font-size: 20px;
-      color: #2c3e50;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input {
-      padding: 8px;
-      width: 100%;
-      margin-top: 5px;
-      box-sizing: border-box;
-    }
-    .result {
-      margin-top: 15px;
-      font-weight: bold;
-      color: #2c3e50;
-    }
-    button {
-      padding: 10px 20px;
-      margin-top: 20px;
-      font-size: 16px;
-      background-color: #2c3e50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #1a242f;
-    }
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #f2f2f2; }
+    input[type="number"] { width: 100px; }
   </style>
 </head>
 <body>
 
-  <h1>Calculadora de Preço por Estado</h1>
+  <h2>💰 Recomendação de Preços por Estado</h2>
 
-  <div class="box">
-    <h2>🔢 Informações de Entrada</h2>
-    <label>Produto:</label>
-    <input type="text" id="produto" placeholder="Ex: Quiabo">
+  <label for="precoFinal">Custo Total da Operação (R$): </label>
+  <input type="number" id="precoFinal" value="10000" step="0.01"><br><br>
 
-    <label>Custo por tonelada (R$):</label>
-    <input type="number" id="custo" placeholder="Ex: 800">
+  <label for="lucroMinimo">Margem de Lucro Mínima (%): </label>
+  <input type="number" id="lucroMinimo" value="15" step="1"><br><br>
 
-    <label>Frete por tonelada (R$):</label>
-    <input type="number" id="frete" placeholder="Ex: 200">
+  <h4>Concorrente 1 (R$/saca):</h4>
+  SP: <input type="number" id="conc1_sp" value="52"> 
+  RJ: <input type="number" id="conc1_rj" value="57"> 
+  MG: <input type="number" id="conc1_mg" value="56"><br><br>
 
-    <label>Quantidade (toneladas):</label>
-    <input type="number" id="quantidade" placeholder="Ex: 10">
-  </div>
+  <h4>Concorrente 2 (R$/saca):</h4>
+  SP: <input type="number" id="conc2_sp" value="50"> 
+  RJ: <input type="number" id="conc2_rj" value="58"> 
+  MG: <input type="number" id="conc2_mg" value="54"><br><br>
 
-  <div class="box">
-    <h2>📈 Preços de Venda (por tonelada)</h2>
-    <label>Preço SP (R$):</label>
-    <input type="number" id="precoSP" placeholder="Ex: 1500">
+  <button onclick="calcular()">Calcular Preços Recomendados</button>
 
-    <label>Preço RJ (R$):</label>
-    <input type="number" id="precoRJ" placeholder="Ex: 1600">
-
-    <label>Preço MG (R$):</label>
-    <input type="number" id="precoMG" placeholder="Ex: 1550">
-  </div>
-
-  <div class="box">
-    <h2>🧮 Cálculo</h2>
-    <button onclick="calcular()">Calcular Lucro e Impostos</button>
-    
-    <div id="resultado" class="result"></div>
-  </div>
+  <div id="resultado"></div>
 
   <script>
     function calcular() {
-      const custo = parseFloat(document.getElementById('custo').value || 0);
-      const frete = parseFloat(document.getElementById('frete').value || 0);
-      const quantidade = parseFloat(document.getElementById('quantidade').value || 0);
-      const precoSP = parseFloat(document.getElementById('precoSP').value || 0);
-      const precoRJ = parseFloat(document.getElementById('precoRJ').value || 0);
-      const precoMG = parseFloat(document.getElementById('precoMG').value || 0);
+      const custoTotal = parseFloat(document.getElementById('precoFinal').value);
+      const margemLucro = parseFloat(document.getElementById('lucroMinimo').value) / 100;
 
-      const impostoSP = 0.06;
-      const impostoICMS = 0.04;
+      // Impostos
+      const icms_sp = 0.06;
+      const difal_rj = 0.06;
+      const difal_mg = 0.06;
 
-      const custoTotal = custo + frete;
+      // Preços concorrência
+      const conc = {
+        sp: [parseFloat(document.getElementById('conc1_sp').value), parseFloat(document.getElementById('conc2_sp').value)],
+        rj: [parseFloat(document.getElementById('conc1_rj').value), parseFloat(document.getElementById('conc2_rj').value)],
+        mg: [parseFloat(document.getElementById('conc1_mg').value), parseFloat(document.getElementById('conc2_mg').value)]
+      };
 
-      const lucroSP = (precoSP * (1 - impostoSP) - custoTotal) * quantidade;
-      const lucroRJ = (precoRJ * (1 - impostoSP - impostoICMS) - custoTotal) * quantidade;
-      const lucroMG = (precoMG * (1 - impostoSP - impostoICMS) - custoTotal) * quantidade;
+      // Cálculo de preço total por estado
+      function calcularPrecoMin(imposto) {
+        return custoTotal * (1 + margemLucro + imposto);
+      }
 
-      const impostoSPTotal = precoSP * impostoSP * quantidade;
-      const impostoRJTotal = precoRJ * (impostoSP + impostoICMS) * quantidade;
-      const impostoMGTotal = precoMG * (impostoSP + impostoICMS) * quantidade;
+      const precoSP = calcularPrecoMin(icms_sp);
+      const precoRJ = calcularPrecoMin(icms_sp + difal_rj);
+      const precoMG = calcularPrecoMin(icms_sp + difal_mg);
 
-      document.getElementById('resultado').innerHTML = `
-        <h3>💰 Lucro Total por Estado:</h3>
-        <p>SP: R$ ${lucroSP.toFixed(2)}</p>
-        <p>RJ: R$ ${lucroRJ.toFixed(2)}</p>
-        <p>MG: R$ ${lucroMG.toFixed(2)}</p>
-        <h3>🧾 Impostos Totais:</h3>
-        <p>SP (6%): R$ ${impostoSPTotal.toFixed(2)}</p>
-        <p>RJ (6% + 4%): R$ ${impostoRJTotal.toFixed(2)}</p>
-        <p>MG (6% + 4%): R$ ${impostoMGTotal.toFixed(2)}</p>
+      // Conversão para saca (25kg e 50kg)
+      const precoSP25 = (precoSP / 1000) * 25;
+      const precoSP50 = (precoSP / 1000) * 50;
+      const precoRJ25 = (precoRJ / 1000) * 25;
+      const precoRJ50 = (precoRJ / 1000) * 50;
+      const precoMG25 = (precoMG / 1000) * 25;
+      const precoMG50 = (precoMG / 1000) * 50;
+
+      function dif(preco, concorrente) {
+        const d = preco - concorrente;
+        return d.toFixed(2);
+      }
+
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th>Estado</th>
+              <th>Tipo Saca</th>
+              <th>Preço Recomendado</th>
+              <th>Concorrente 1</th>
+              <th>Dif.</th>
+              <th>Concorrente 2</th>
+              <th>Dif.</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td rowspan="2">SP</td>
+              <td>25kg</td>
+              <td>R$ ${precoSP25.toFixed(2)}</td>
+              <td>R$ ${conc.sp[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoSP25, conc.sp[0])}</td>
+              <td>R$ ${conc.sp[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoSP25, conc.sp[1])}</td>
+            </tr>
+            <tr>
+              <td>50kg</td>
+              <td>R$ ${precoSP50.toFixed(2)}</td>
+              <td>R$ ${conc.sp[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoSP50, conc.sp[0])}</td>
+              <td>R$ ${conc.sp[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoSP50, conc.sp[1])}</td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">RJ</td>
+              <td>25kg</td>
+              <td>R$ ${precoRJ25.toFixed(2)}</td>
+              <td>R$ ${conc.rj[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoRJ25, conc.rj[0])}</td>
+              <td>R$ ${conc.rj[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoRJ25, conc.rj[1])}</td>
+            </tr>
+            <tr>
+              <td>50kg</td>
+              <td>R$ ${precoRJ50.toFixed(2)}</td>
+              <td>R$ ${conc.rj[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoRJ50, conc.rj[0])}</td>
+              <td>R$ ${conc.rj[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoRJ50, conc.rj[1])}</td>
+            </tr>
+
+            <tr>
+              <td rowspan="2">MG</td>
+              <td>25kg</td>
+              <td>R$ ${precoMG25.toFixed(2)}</td>
+              <td>R$ ${conc.mg[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoMG25, conc.mg[0])}</td>
+              <td>R$ ${conc.mg[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoMG25, conc.mg[1])}</td>
+            </tr>
+            <tr>
+              <td>50kg</td>
+              <td>R$ ${precoMG50.toFixed(2)}</td>
+              <td>R$ ${conc.mg[0].toFixed(2)}</td>
+              <td>R$ ${dif(precoMG50, conc.mg[0])}</td>
+              <td>R$ ${conc.mg[1].toFixed(2)}</td>
+              <td>R$ ${dif(precoMG50, conc.mg[1])}</td>
+            </tr>
+          </tbody>
+        </table>
       `;
+
+      document.getElementById('resultado').innerHTML = html;
     }
   </script>
 
