@@ -135,6 +135,198 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 </div>
+<!-- Box 6: Preço total do lote com impostos -->
+<div class="box">
+  <h3>Box 6: Preço total do lote com impostos</h3>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label for="precoLoteImpostoSP">Preço total lote com imposto SP (R$)</label>
+      <input type="number" id="precoLoteImpostoSP" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoLoteImpostoRJ">Preço total lote com imposto RJ (R$)</label>
+      <input type="number" id="precoLoteImpostoRJ" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoLoteImpostoMG">Preço total lote com imposto MG (R$)</label>
+      <input type="number" id="precoLoteImpostoMG" class="form-control" readonly />
+    </div>
+  </div>
+</div>
+
+<!-- Box 7: Preço de custo por saca -->
+<div class="box">
+  <h3>Box 7: Preço de custo por saca</h3>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label for="precoCusto25SP">Saca 25kg SP (R$)</label>
+      <input type="number" id="precoCusto25SP" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto25RJ">Saca 25kg RJ (R$)</label>
+      <input type="number" id="precoCusto25RJ" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto25MG">Saca 25kg MG (R$)</label>
+      <input type="number" id="precoCusto25MG" class="form-control" readonly />
+    </div>
+
+    <div class="col-md-4">
+      <label for="precoCusto50SP">Saca 50kg SP (R$)</label>
+      <input type="number" id="precoCusto50SP" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto50RJ">Saca 50kg RJ (R$)</label>
+      <input type="number" id="precoCusto50RJ" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto50MG">Saca 50kg MG (R$)</label>
+      <input type="number" id="precoCusto50MG" class="form-control" readonly />
+    </div>
+
+    <div class="col-md-4">
+      <label for="precoCusto60SP">Saca 60kg SP (R$)</label>
+      <input type="number" id="precoCusto60SP" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto60RJ">Saca 60kg RJ (R$)</label>
+      <input type="number" id="precoCusto60RJ" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="precoCusto60MG">Saca 60kg MG (R$)</label>
+      <input type="number" id="precoCusto60MG" class="form-control" readonly />
+    </div>
+  </div>
+</div>
+<!-- Box 8: Preço dos concorrentes -->
+<div class="box">
+  <h3>Box 8: Preço dos concorrentes</h3>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label>Concorrente 1 – Saca 25kg (R$)</label>
+      <input type="number" id="conc1_25" class="form-control" />
+    </div>
+    <div class="col-md-4">
+      <label>Concorrente 1 – Saca 50kg (R$)</label>
+      <input type="number" id="conc1_50" class="form-control" />
+    </div>
+    <div class="col-md-4">
+      <label>Concorrente 1 – Saca 60kg (R$)</label>
+      <input type="number" id="conc1_60" class="form-control" />
+    </div>
+    <div class="col-md-4">
+      <label>Concorrente 2 – Saca 25kg (R$)</label>
+      <input type="number" id="conc2_25" class="form-control" />
+    </div>
+    <div class="col-md-4">
+      <label>Concorrente 2 – Saca 50kg (R$)</label>
+      <input type="number" id="conc2_50" class="form-control" />
+    </div>
+    <div class="col-md-4">
+      <label>Concorrente 2 – Saca 60kg (R$)</label>
+      <input type="number" id="conc2_60" class="form-control" />
+    </div>
+  </div>
+</div>
+
+<!-- Box 9: Margem de lucro -->
+<div class="box">
+  <h3>Box 9: Margem de lucro</h3>
+  <div class="row g-3 mb-3">
+    <div class="col-md-3">
+      <label>Margem de lucro pretendida (%)</label>
+      <input type="number" id="margemLucro" class="form-control" />
+    </div>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="table-light">
+        <tr>
+          <th></th>
+          <th>SP</th>
+          <th>RJ</th>
+          <th>MG</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Saca 25kg</th>
+          <td><span id="lucro_25_SP">-</span></td>
+          <td><span id="lucro_25_RJ">-</span></td>
+          <td><span id="lucro_25_MG">-</span></td>
+        </tr>
+        <tr>
+          <th>Saca 50kg</th>
+          <td><span id="lucro_50_SP">-</span></td>
+          <td><span id="lucro_50_RJ">-</span></td>
+          <td><span id="lucro_50_MG">-</span></td>
+        </tr>
+        <tr>
+          <th>Saca 60kg</th>
+          <td><span id="lucro_60_SP">-</span></td>
+          <td><span id="lucro_60_RJ">-</span></td>
+          <td><span id="lucro_60_MG">-</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!-- Box 10: Comparativo de preços com concorrentes -->
+<div class="box">
+  <h3>Box 10: Comparativo de preços com concorrentes</h3>
+  <div class="table-responsive">
+    <table class="table table-bordered text-center">
+      <thead class="table-light">
+        <tr>
+          <th></th>
+          <th>Lucro SP</th>
+          <th>Conc. 1</th>
+          <th>Conc. 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Saca 25kg</th>
+          <td id="comp_SP_25">-</td>
+          <td id="conc1_25_result">-</td>
+          <td id="conc2_25_result">-</td>
+        </tr>
+        <tr>
+          <th>Saca 50kg</th>
+          <td id="comp_SP_50">-</td>
+          <td id="conc1_50_result">-</td>
+          <td id="conc2_50_result">-</td>
+        </tr>
+        <tr>
+          <th>Saca 60kg</th>
+          <td id="comp_SP_60">-</td>
+          <td id="conc1_60_result">-</td>
+          <td id="conc2_60_result">-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Box 11: Lucro da operação -->
+<div class="box">
+  <h3>Box 11: Lucro da operação</h3>
+  <div class="row g-3">
+    <div class="col-md-4">
+      <label for="lucroOperacaoSP">Lucro total SP (R$)</label>
+      <input type="text" id="lucroOperacaoSP" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="lucroOperacaoRJ">Lucro total RJ (R$)</label>
+      <input type="text" id="lucroOperacaoRJ" class="form-control" readonly />
+    </div>
+    <div class="col-md-4">
+      <label for="lucroOperacaoMG">Lucro total MG (R$)</label>
+      <input type="text" id="lucroOperacaoMG" class="form-control" readonly />
+    </div>
+  </div>
+</div>
       <div id="restanteBoxes"></div>
     </div>
   `;
@@ -233,4 +425,128 @@ function calcularCustosTotais() {
   document.getElementById("custoTotalEmbalagem").value = custoEmbalagemTotal.toFixed(2);
   document.getElementById("custoTotalEtiqueta").value = custoEtiquetaTotal.toFixed(2);
   document.getElementById("custoTotalDespesas").value = custoDespesas.toFixed(2);
+}
+["precoTotal", "custoTotalDespesas", "qtdSacas25", "qtdSacas50", "qtdSacas60"].forEach(id => {
+  document.getElementById(id).addEventListener("input", calcularImpostosELotes);
+});
+
+function calcularImpostosELotes() {
+  const precoLote = getNumber("precoTotal");
+  const despesas = getNumber("custoTotalDespesas");
+
+  const precoSP = (precoLote + despesas) * 1.06; // 6%
+  const precoRJ = precoSP * 1.12; // +12%
+  const precoMG = precoSP * 1.08; // +8%
+
+  document.getElementById("precoLoteImpostoSP").value = precoSP.toFixed(2);
+  document.getElementById("precoLoteImpostoRJ").value = precoRJ.toFixed(2);
+  document.getElementById("precoLoteImpostoMG").value = precoMG.toFixed(2);
+
+  const s25 = getNumber("qtdSacas25");
+  const s50 = getNumber("qtdSacas50");
+  const s60 = getNumber("qtdSacas60");
+
+  // Evita divisão por zero
+  const safeDiv = (a, b) => (b > 0 ? (a / b).toFixed(2) : "0.00");
+
+  document.getElementById("precoCusto25SP").value = safeDiv(precoSP, s25);
+  document.getElementById("precoCusto25RJ").value = safeDiv(precoRJ, s25);
+  document.getElementById("precoCusto25MG").value = safeDiv(precoMG, s25);
+
+  document.getElementById("precoCusto50SP").value = safeDiv(precoSP, s50);
+  document.getElementById("precoCusto50RJ").value = safeDiv(precoRJ, s50);
+  document.getElementById("precoCusto50MG").value = safeDiv(precoMG, s50);
+
+  document.getElementById("precoCusto60SP").value = safeDiv(precoSP, s60);
+  document.getElementById("precoCusto60RJ").value = safeDiv(precoRJ, s60);
+  document.getElementById("precoCusto60MG").value = safeDiv(precoMG, s60);
+}
+["margemLucro", "precoTotal", "qtdSacas25", "qtdSacas50", "qtdSacas60"].forEach(id => {
+  document.getElementById(id).addEventListener("input", calcularMargemLucro);
+});
+
+function calcularMargemLucro() {
+  const precoTotal = getNumber("precoTotal");
+  const margemPct = getNumber("margemLucro") / 100;
+
+  const precoSP = (precoTotal * (1 + margemPct)) * 1.06;
+  const precoRJ = precoSP * 1.12;
+  const precoMG = precoSP * 1.08;
+
+  const s25 = getNumber("qtdSacas25");
+  const s50 = getNumber("qtdSacas50");
+  const s60 = getNumber("qtdSacas60");
+
+  const calcLucro = (valor, qtd) => (qtd > 0 ? (valor / qtd).toFixed(2) : "-");
+
+  document.getElementById("lucro_25_SP").textContent = calcLucro(precoSP, s25);
+  document.getElementById("lucro_25_RJ").textContent = calcLucro(precoRJ, s25);
+  document.getElementById("lucro_25_MG").textContent = calcLucro(precoMG, s25);
+
+  document.getElementById("lucro_50_SP").textContent = calcLucro(precoSP, s50);
+  document.getElementById("lucro_50_RJ").textContent = calcLucro(precoRJ, s50);
+  document.getElementById("lucro_50_MG").textContent = calcLucro(precoMG, s50);
+
+  document.getElementById("lucro_60_SP").textContent = calcLucro(precoSP, s60);
+  document.getElementById("lucro_60_RJ").textContent = calcLucro(precoRJ, s60);
+  document.getElementById("lucro_60_MG").textContent = calcLucro(precoMG, s60);
+}
+[
+  "conc1_25", "conc1_50", "conc1_60",
+  "conc2_25", "conc2_50", "conc2_60",
+  "lucro_25_SP", "lucro_50_SP", "lucro_60_SP",
+  "qtdSacas25", "qtdSacas50", "qtdSacas60"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener("input", compararPrecos);
+});
+
+function compararPrecos() {
+  const getValor = (id) => parseFloat(document.getElementById(id)?.value || document.getElementById(id)?.textContent) || 0;
+
+  const c1_25 = getValor("conc1_25");
+  const c1_50 = getValor("conc1_50");
+  const c1_60 = getValor("conc1_60");
+
+  const c2_25 = getValor("conc2_25");
+  const c2_50 = getValor("conc2_50");
+  const c2_60 = getValor("conc2_60");
+
+  const l25 = getValor("lucro_25_SP");
+  const l50 = getValor("lucro_50_SP");
+  const l60 = getValor("lucro_60_SP");
+
+  document.getElementById("comp_SP_25").textContent = l25.toFixed(2);
+  document.getElementById("comp_SP_50").textContent = l50.toFixed(2);
+  document.getElementById("comp_SP_60").textContent = l60.toFixed(2);
+
+  document.getElementById("conc1_25_result").textContent = c1_25.toFixed(2);
+  document.getElementById("conc1_50_result").textContent = c1_50.toFixed(2);
+  document.getElementById("conc1_60_result").textContent = c1_60.toFixed(2);
+
+  document.getElementById("conc2_25_result").textContent = c2_25.toFixed(2);
+  document.getElementById("conc2_50_result").textContent = c2_50.toFixed(2);
+  document.getElementById("conc2_60_result").textContent = c2_60.toFixed(2);
+}
+
+["lucro_25_SP", "lucro_50_SP", "lucro_60_SP",
+ "lucro_25_RJ", "lucro_50_RJ", "lucro_60_RJ",
+ "lucro_25_MG", "lucro_50_MG", "lucro_60_MG",
+ "qtdSacas25", "qtdSacas50", "qtdSacas60"
+].forEach(id => {
+  document.getElementById(id)?.addEventListener("input", calcularLucroTotal);
+});
+
+function calcularLucroTotal() {
+  const getVal = id => parseFloat(document.getElementById(id)?.textContent) || 0;
+  const s25 = getNumber("qtdSacas25");
+  const s50 = getNumber("qtdSacas50");
+  const s60 = getNumber("qtdSacas60");
+
+  const lucroSP = s25 * getVal("lucro_25_SP") + s50 * getVal("lucro_50_SP") + s60 * getVal("lucro_60_SP");
+  const lucroRJ = s25 * getVal("lucro_25_RJ") + s50 * getVal("lucro_50_RJ") + s60 * getVal("lucro_60_RJ");
+  const lucroMG = s25 * getVal("lucro_25_MG") + s50 * getVal("lucro_50_MG") + s60 * getVal("lucro_60_MG");
+
+  document.getElementById("lucroOperacaoSP").value = lucroSP.toFixed(2);
+  document.getElementById("lucroOperacaoRJ").value = lucroRJ.toFixed(2);
+  document.getElementById("lucroOperacaoMG").value = lucroMG.toFixed(2);
 }
