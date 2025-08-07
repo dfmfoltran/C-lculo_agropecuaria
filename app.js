@@ -24,6 +24,32 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </div>
 
+    <div class='box' id="box2">
+      <h2>Box 2: Custos e Despesas</h2>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label">Custo de frete (R$)</label>
+          <input type="number" id="frete" class="form-control" step="0.01" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Custos operacionais (R$)</label>
+          <input type="number" id="operacionais" class="form-control" step="0.01" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Custo embalagem unidade (R$)</label>
+          <input type="number" id="embalagemUn" class="form-control" step="0.01" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Custo etiqueta unidade (R$)</label>
+          <input type="number" id="etiquetaUn" class="form-control" step="0.01" />
+        </div>
+        <div class="col-md-4">
+          <label class="form-label">Custo estoque (R$)</label>
+          <input type="number" id="estoque" class="form-control" step="0.01" />
+        </div>
+      </div>
+    </div>
+
     <div class='box' id="box3">
       <h2>Box 3: Como será a venda</h2>
       <div class="row g-3">
