@@ -57,7 +57,33 @@
       <input type="number" id="precoLote" readonly />
     </label>
   </div>
+<div class="box">
+  <h2>Box 2 – Custos e Despesas</h2>
 
+  <label>Custo de frete (R$):
+    <input type="number" id="custoFrete" oninput="calcularDespesasExtras()" />
+  </label>
+
+  <label>Custos operacionais (R$):
+    <input type="number" id="custosOperacionais" oninput="calcularDespesasExtras()" />
+  </label>
+
+  <label>Custo embalagem por unidade (R$):
+    <input type="number" id="custoEmbalagem" oninput="calcularDespesasExtras()" />
+  </label>
+
+  <label>Custo etiqueta por unidade (R$):
+    <input type="number" id="custoEtiqueta" oninput="calcularDespesasExtras()" />
+  </label>
+
+  <label>Custo de estoque (R$):
+    <input type="number" id="custoEstoque" oninput="calcularDespesasExtras()" />
+  </label>
+
+  <p><strong>Total de despesas extras:</strong> <span id="totalDespesasExtras">R$ 0,00</span></p>
+</div>
+
+  
   <script src="script.js"></script>
 </body>
 </html>
