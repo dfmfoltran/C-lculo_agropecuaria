@@ -94,3 +94,35 @@ document.querySelectorAll("input").forEach(input => {
     updateBox2Box3();   // Novo
   });
 });
+function adicionarLote() {
+  const nome = document.getElementById("nomeLote").value || `Lote ${Date.now()}`;
+  const kg = parseFloat(document.getElementById("kgLote").value) || 0;
+  const custo = parseFloat(document.getElementById("custoLote").value) || 0;
+  const precoVenda = parseFloat(document.getElementById("precoVenda").value) || 0;
+
+  const receita = precoVenda * kg;
+  const lucro = receita - custo;
+  const margem = custo > 0 ? (lucro / custo) * 100 : 0;
+
+  const tabela = document.querySelector("#tabelaLotes tbody");
+  const tr = document.createElement("tr");
+
+  tr.innerHTML = `
+    <td>${nome}</td>
+    <td>${kg.toLocaleString("pt-BR")} kg</td>
+    <td>${formatCurrency(custo)}</td>
+    <td>${formatCurrency(precoVenda)}</td>
+    <td>${formatCurrency(receita)}</td>
+    <td>${formatCurrency(lucro)}</td>
+    <td>${margem.toFixed(1)}%</td>
+    <td><button onclick="this.closest('tr').remove()">❌</button></td>
+  `;
+
+  tabela.appendChild(tr);
+
+  // Limpar inputs
+  document.getElementById("nomeLote").value = "";
+  document.getElementById("kgLote").value = "";
+  document.getElementById("custoLote").value = "";
+  document.getElementById("precoVenda").value = "";
+}
