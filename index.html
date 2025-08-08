@@ -45,7 +45,115 @@
     <!-- Onde os boxes 4 em diante serão inseridos via JS -->
     <div id="restanteBoxes"></div>
   </div>
+<div class="box" id="box7">
+  <h2>Box 7: Preço de Custo por Saca</h2>
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>UF</th>
+        <th>Saca 25kg</th>
+        <th>Saca 50kg</th>
+        <th>Saca 60kg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SP</td>
+        <td><input type="number" id="custoSaca25_SP" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca50_SP" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca60_SP" class="form-control" readonly></td>
+      </tr>
+      <tr>
+        <td>RJ</td>
+        <td><input type="number" id="custoSaca25_RJ" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca50_RJ" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca60_RJ" class="form-control" readonly></td>
+      </tr>
+      <tr>
+        <td>MG</td>
+        <td><input type="number" id="custoSaca25_MG" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca50_MG" class="form-control" readonly></td>
+        <td><input type="number" id="custoSaca60_MG" class="form-control" readonly></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+  <div class="box" id="box8">
+  <h2>Box 8: Preço dos Concorrentes</h2>
+  <div class="row">
+    <div class="col-md-12">
+      <h5>Concorrente 1</h5>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 25kg</label>
+      <input type="number" class="form-control" id="concorrente1_25">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 50kg</label>
+      <input type="number" class="form-control" id="concorrente1_50">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 60kg</label>
+      <input type="number" class="form-control" id="concorrente1_60">
+    </div>
+  </div>
 
+  <div class="row mt-3">
+    <div class="col-md-12">
+      <h5>Concorrente 2</h5>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 25kg</label>
+      <input type="number" class="form-control" id="concorrente2_25">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 50kg</label>
+      <input type="number" class="form-control" id="concorrente2_50">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Saca 60kg</label>
+      <input type="number" class="form-control" id="concorrente2_60">
+    </div>
+  </div>
+</div>
+  <div class="box" id="box9">
+  <h2>Box 9: Margem de Lucro e Preço Final com Lucro</h2>
+  <div class="mb-3">
+    <label class="form-label">Margem de lucro pretendida (%)</label>
+    <input type="number" id="margemLucro" class="form-control">
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>Saca 25kg</th>
+        <th>Saca 50kg</th>
+        <th>Saca 60kg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SP</td>
+        <td><input type="number" class="form-control" id="lucroSaca25_SP" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca50_SP" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca60_SP" readonly></td>
+      </tr>
+      <tr>
+        <td>RJ</td>
+        <td><input type="number" class="form-control" id="lucroSaca25_RJ" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca50_RJ" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca60_RJ" readonly></td>
+      </tr>
+      <tr>
+        <td>MG</td>
+        <td><input type="number" class="form-control" id="lucroSaca25_MG" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca50_MG" readonly></td>
+        <td><input type="number" class="form-control" id="lucroSaca60_MG" readonly></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
   <!-- Script principal -->
   <script src="app.js"></script>
 </body>
