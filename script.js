@@ -85,8 +85,8 @@ function calcularPrecosComImpostos() {
   const custoTotalDespesas = parseFloat(custoTotalDespesasText) || 0;
 
   const precoSP = (precoLote + totalDespesas) * 1.06;
-  const precoRJ = precoSP * 1.12;
-  const precoMG = precoSP * 1.08;
+  const precoRJ = precoSP * 0.12;
+  const precoMG = precoSP * 0.08;
 
   document.getElementById("precoComImpostoSP").innerText = precoSP.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   document.getElementById("precoComImpostoRJ").innerText = precoRJ.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
