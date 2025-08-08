@@ -56,7 +56,35 @@
 </div>
 
 <hr>
+<hr>
 
+<div class="box">
+  <h2>Box 5 – Comparativo entre Lotes</h2>
+
+  <div>
+    <label>Nome do Lote: <input type="text" id="nomeLote" /></label>
+    <label>Kg Total: <input type="number" id="kgLote" /></label>
+    <label>Custo Total (R$): <input type="number" id="custoLote" /></label>
+    <label>Preço de Venda (R$/kg): <input type="number" id="precoVenda" /></label>
+    <button onclick="adicionarLote()">Adicionar Lote</button>
+  </div>
+
+  <table id="tabelaLotes" border="1" style="margin-top: 20px; width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr>
+        <th>Lote</th>
+        <th>Kg</th>
+        <th>Custo Total</th>
+        <th>Preço Venda (kg)</th>
+        <th>Receita Esperada</th>
+        <th>Lucro</th>
+        <th>Margem (%)</th>
+        <th>Excluir</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 <div class="box">
   <h2>Box 4 – Concorrência / Benchmarking</h2>
   <label>Custo médio concorrente (R$/kg): <input type="number" id="custoConcorrente" /></label>
