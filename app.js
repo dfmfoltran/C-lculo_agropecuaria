@@ -150,12 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="col-md-4">
       <label for="precoLoteImpostoMG">Preço total lote com imposto MG (R$)</label>
       <input type="number" id="precoLoteImpostoMG" class="form-control" readonly />
-    </div>
-  </div>
-</div>
-<div class="box" id="box6">
-  <h2>Box 6: Custos de Venda do Lote (com Impostos)</h2>
-  <div class="row">
+      <div class="row">
     <div class="col-md-4">
       <label class="form-label">Preço total do lote com imposto SP (6%)</label>
       <input type="number" class="form-control" id="precoLoteSP" readonly>
@@ -167,6 +162,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <div class="col-md-4">
       <label class="form-label">Preço total do lote com imposto MG (SP + 8%)</label>
       <input type="number" class="form-control" id="precoLoteMG" readonly>
+    </div>
+  </div>
     </div>
   </div>
 </div>
