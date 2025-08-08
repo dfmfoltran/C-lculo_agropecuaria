@@ -602,3 +602,51 @@ document.getElementById("custoSaca60_RJ").value = calcPrecoPorSaca(precoLoteRJ, 
 document.getElementById("custoSaca25_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca25);
 document.getElementById("custoSaca50_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca50);
 document.getElementById("custoSaca60_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca60);
+
+const margemLucro = parseFloat(document.getElementById("margemLucro").value) || 0;
+const margemFator = margemLucro / 100;
+
+function calcPrecoLucro(precoBase, margem, qtde) {
+  return qtde > 0 ? (((precoBase + (precoTotalLote * margem)) / qtde).toFixed(2)) : '0.00';
+}
+
+// SP
+document.getElementById("lucroSaca25_SP").value = calcPrecoLucro(precoLoteSP, margemFator, qtdeSaca25);
+document.getElementById("lucroSaca50_SP").value = calcPrecoLucro(precoLoteSP, margemFator, qtdeSaca50);
+document.getElementById("lucroSaca60_SP").value = calcPrecoLucro(precoLoteSP, margemFator, qtdeSaca60);
+
+// RJ
+document.getElementById("lucroSaca25_RJ").value = calcPrecoLucro(precoLoteRJ, margemFator, qtdeSaca25);
+document.getElementById("lucroSaca50_RJ").value = calcPrecoLucro(precoLoteRJ, margemFator, qtdeSaca50);
+document.getElementById("lucroSaca60_RJ").value = calcPrecoLucro(precoLoteRJ, margemFator, qtdeSaca60);
+
+// MG
+document.getElementById("lucroSaca25_MG").value = calcPrecoLucro(precoLoteMG, margemFator, qtdeSaca25);
+document.getElementById("lucroSaca50_MG").value = calcPrecoLucro(precoLoteMG, margemFator, qtdeSaca50);
+document.getElementById("lucroSaca60_MG").value = calcPrecoLucro(precoLoteMG, margemFator, qtdeSaca60);
+
+// Comparativo com concorrentes
+document.getElementById("cmp_sp_25").value = document.getElementById("lucroSaca25_SP").value;
+document.getElementById("cmp_sp_50").value = document.getElementById("lucroSaca50_SP").value;
+document.getElementById("cmp_sp_60").value = document.getElementById("lucroSaca60_SP").value;
+
+document.getElementById("cmp_c1_25").value = document.getElementById("concorrente1_25").value;
+document.getElementById("cmp_c1_50").value = document.getElementById("concorrente1_50").value;
+document.getElementById("cmp_c1_60").value = document.getElementById("concorrente1_60").value;
+
+document.getElementById("cmp_c2_25").value = document.getElementById("concorrente2_25").value;
+document.getElementById("cmp_c2_50").value = document.getElementById("concorrente2_50").value;
+document.getElementById("cmp_c2_60").value = document.getElementById("concorrente2_60").value;
+
+const totalSacas = qtdeSaca25 + qtdeSaca50 + qtdeSaca60;
+document.getElementById("lucroTotalSacas").value = totalSacas;
+
+const valorVendaSP =
+  (parseFloat(document.getElementById("lucroSaca25_SP").value) || 0) * qtdeSaca25 +
+  (parseFloat(document.getElementById("lucroSaca50_SP").value) || 0) * qtdeSaca50 +
+  (parseFloat(document.getElementById("lucroSaca60_SP").value) || 0) * qtdeSaca60;
+
+document.getElementById("lucroTotalSP").value = valorVendaSP.toFixed(2);
+
+const lucroEstimado = valorVendaSP - precoLoteSP;
+document.getElementById("lucroEstimadoSP").value = lucroEstimado.toFixed(2);
