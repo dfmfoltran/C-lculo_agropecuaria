@@ -63,7 +63,7 @@ function calcularTotaisCustos() {
 
   const totalEmb = totalSacas * custoEmbUn;
   const totalEtiq = totalSacas * custoEtiqUn;
-  const totalDespesas = totalEmb + totalEtiq + custoOperacionais + custoEstoque + custoFrete;
+  const totalDespesas = totalEmb + totalEtiq + custoOperacionais + custoEstoque;
 
   document.getElementById("custoTotalEmbalagem").innerText = totalEmb.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   document.getElementById("custoTotalEtiqueta").innerText = totalEtiq.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -85,8 +85,8 @@ function calcularPrecosComImpostos() {
   const custoTotalDespesas = parseFloat(custoTotalDespesasText) || 0;
 
   const precoSP = (precoLote + totalDespesas) * 1.06;
-  const precoRJ = precoSP * 0.12;
-  const precoMG = precoSP * 0.08;
+  const precoRJ = (precoSP) + precoSP * 0.12;
+  const precoMG = (precoSP) + precoSP * 0.08;
 
   document.getElementById("precoComImpostoSP").innerText = precoSP.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   document.getElementById("precoComImpostoRJ").innerText = precoRJ.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -162,11 +162,11 @@ function calcularPrecoComLucro() {
   const sacas50 = parseFloat(document.getElementById("sacas50").innerText) || 0;
   const sacas60 = parseFloat(document.getElementById("sacas60").innerText) || 0;
 
-  const base = (precoLote + despesas) * margemFator;
+  const base = (precoLote + totalDespesas) * margemFator;
 
   const precoSP = base * 1.06;
-  const precoRJ = precoSP * 1.12;
-  const precoMG = precoSP * 1.08;
+  const precoRJ = (precoSP) + precoSP * 0.12;
+  const precoMG = (precoSP) + precoSP * 0.08;
 
   function render(id, total, sacas) {
     const val = sacas > 0 ? total / sacas : null;
