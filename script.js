@@ -107,6 +107,10 @@ function calcularPrecoPorSaca() {
   const sacas50 = parseFloat(document.getElementById("sacas50").innerText) || 0;
   const sacas60 = parseFloat(document.getElementById("sacas60").innerText) || 0;
 
+  const perc25 = parseFloat(document.getElementById("pct25").value) || 0;
+  const perc50 = parseFloat(document.getElementById("pct50").value) || 0;
+  const perc60 = parseFloat(document.getElementById("pct60").value) || 0;
+
   function getValor(textId) {
     const raw = document.getElementById(textId).innerText.replace("R$", "").replace(/\./g, "").replace(",", ".");
     return parseFloat(raw) || 0;
@@ -116,8 +120,11 @@ function calcularPrecoPorSaca() {
   const precoRJ = getValor("precoComImpostoRJ");
   const precoMG = getValor("precoComImpostoMG");
 
-  function format(val, qtde) {
-    return qtde > 0 ? val / qtde : null;
+  function calcularRateado(total, perc, qtd) {
+    if (qtd > 0 && perc > 0) {
+      return (total * (perc / 100)) / qtd;
+    }
+    return null;
   }
 
   function render(id, val) {
@@ -126,18 +133,22 @@ function calcularPrecoPorSaca() {
       : "—";
   }
 
-  render("custoSaca25SP", format(precoSP, sacas25));
-  render("custoSaca50SP", format(precoSP, sacas50));
-  render("custoSaca60SP", format(precoSP, sacas60));
+  // SP
+  render("custoSaca25SP", calcularRateado(precoSP, perc25, sacas25));
+  render("custoSaca50SP", calcularRateado(precoSP, perc50, sacas50));
+  render("custoSaca60SP", calcularRateado(precoSP, perc60, sacas60));
 
-  render("custoSaca25RJ", format(precoRJ, sacas25));
-  render("custoSaca50RJ", format(precoRJ, sacas50));
-  render("custoSaca60RJ", format(precoRJ, sacas60));
+  // RJ
+  render("custoSaca25RJ", calcularRateado(precoRJ, perc25, sacas25));
+  render("custoSaca50RJ", calcularRateado(precoRJ, perc50, sacas50));
+  render("custoSaca60RJ", calcularRateado(precoRJ, perc60, sacas60));
 
-  render("custoSaca25MG", format(precoMG, sacas25));
-  render("custoSaca50MG", format(precoMG, sacas50));
-  render("custoSaca60MG", format(precoMG, sacas60));
+  // MG
+  render("custoSaca25MG", calcularRateado(precoMG, perc25, sacas25));
+  render("custoSaca50MG", calcularRateado(precoMG, perc50, sacas50));
+  render("custoSaca60MG", calcularRateado(precoMG, perc60, sacas60));
 }
+
 document.querySelectorAll("input").forEach(input => {
   input.addEventListener("input", () => {
     calcularKG();
