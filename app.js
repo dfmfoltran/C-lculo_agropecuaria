@@ -153,6 +153,23 @@ document.addEventListener("DOMContentLoaded", () => {
     </div>
   </div>
 </div>
+<div class="box" id="box6">
+  <h2>Box 6: Custos de Venda do Lote (com Impostos)</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <label class="form-label">Preço total do lote com imposto SP (6%)</label>
+      <input type="number" class="form-control" id="precoLoteSP" readonly>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Preço total do lote com imposto RJ (SP + 12%)</label>
+      <input type="number" class="form-control" id="precoLoteRJ" readonly>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label">Preço total do lote com imposto MG (SP + 8%)</label>
+      <input type="number" class="form-control" id="precoLoteMG" readonly>
+    </div>
+  </div>
+</div>
 
 <!-- Box 7: Preço de custo por saca -->
 <div class="box">
@@ -550,3 +567,38 @@ function calcularLucroTotal() {
   document.getElementById("lucroOperacaoRJ").value = lucroRJ.toFixed(2);
   document.getElementById("lucroOperacaoMG").value = lucroMG.toFixed(2);
 }
+// Preço total do lote com impostos
+const precoTotalLote = parseFloat(document.getElementById("precoTotalLote").value) || 0;
+const custoTotalDespesas = parseFloat(document.getElementById("custoTotalDespesas").value) || 0;
+
+const precoLoteSP = precoTotalLote + custoTotalDespesas + (precoTotalLote + custoTotalDespesas) * 0.06;
+const precoLoteRJ = precoLoteSP + precoLoteSP * 0.12;
+const precoLoteMG = precoLoteSP + precoLoteSP * 0.08;
+
+document.getElementById("precoLoteSP").value = precoLoteSP.toFixed(2);
+document.getElementById("precoLoteRJ").value = precoLoteRJ.toFixed(2);
+document.getElementById("precoLoteMG").value = precoLoteMG.toFixed(2);
+
+const qtdeSaca25 = parseFloat(document.getElementById("qtdeSacas25kgFinal").value) || 0;
+const qtdeSaca50 = parseFloat(document.getElementById("qtdeSacas50kgFinal").value) || 0;
+const qtdeSaca60 = parseFloat(document.getElementById("qtdeSacas60kgFinal").value) || 0;
+
+// Evita divisão por zero
+function calcPrecoPorSaca(total, qtde) {
+  return qtde > 0 ? (total / qtde).toFixed(2) : '0.00';
+}
+
+// SP
+document.getElementById("custoSaca25_SP").value = calcPrecoPorSaca(precoLoteSP, qtdeSaca25);
+document.getElementById("custoSaca50_SP").value = calcPrecoPorSaca(precoLoteSP, qtdeSaca50);
+document.getElementById("custoSaca60_SP").value = calcPrecoPorSaca(precoLoteSP, qtdeSaca60);
+
+// RJ
+document.getElementById("custoSaca25_RJ").value = calcPrecoPorSaca(precoLoteRJ, qtdeSaca25);
+document.getElementById("custoSaca50_RJ").value = calcPrecoPorSaca(precoLoteRJ, qtdeSaca50);
+document.getElementById("custoSaca60_RJ").value = calcPrecoPorSaca(precoLoteRJ, qtdeSaca60);
+
+// MG
+document.getElementById("custoSaca25_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca25);
+document.getElementById("custoSaca50_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca50);
+document.getElementById("custoSaca60_MG").value = calcPrecoPorSaca(precoLoteMG, qtdeSaca60);
