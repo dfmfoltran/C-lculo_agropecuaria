@@ -30,7 +30,32 @@
         <label>Preço por tonelada (R$): <input type="number" id="precoTonelada" onchange="calcularPrecoTotal()"></label><br><br>
         <label>Preço total do lote (R$): <input type="number" id="precoTotalLote" readonly></label><br><br>
     </section>
+<hr>
 
+<div class="box">
+  <h2>Box 2 – Custos Extras</h2>
+  <label>Frete (R$): <input type="number" id="frete" /></label>
+  <label>Armazenagem (R$): <input type="number" id="armazenagem" /></label>
+  <label>Operacional (R$): <input type="number" id="operacional" /></label>
+  <p><strong>Custo Total Adicional:</strong> <span id="custoExtra">R$ 0,00</span></p>
+</div>
+
+<div class="box">
+  <h2>Box 3 – Planejamento de Venda</h2>
+  <label>% Varejo: <input type="number" id="pctVarejo" /></label>
+  <label>Preço Varejo (R$/kg): <input type="number" id="precoVarejo" /></label>
+
+  <label>% Atacado: <input type="number" id="pctAtacado" /></label>
+  <label>Preço Atacado (R$/kg): <input type="number" id="precoAtacado" /></label>
+
+  <label>% Cooperativa: <input type="number" id="pctCoop" /></label>
+  <label>Preço Cooperativa (R$/kg): <input type="number" id="precoCoop" /></label>
+
+  <p><strong>Receita Total Estimada:</strong> <span id="receitaTotal">R$ 0,00</span></p>
+  <p><strong>Lucro Estimado:</strong> <span id="lucroEstimado">R$ 0,00</span></p>
+</div>
+
+    
     <script src="script.js"></script>
 </body>
 </html>
