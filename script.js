@@ -60,6 +60,7 @@ function calcularTotaisCustos() {
   const custoEtiqUn = parseFloat(document.getElementById("custoEtiqueta").value) || 0;
   const custoOperacionais = parseFloat(document.getElementById("custosOperacionais").value) || 0;
   const custoEstoque = parseFloat(document.getElementById("custoEstoque").value) || 0;
+  const custoFrete = parseFloat(document.getElementById("custoFrete").value) || 0;
 
   const totalEmb = totalSacas * custoEmbUn;
   const totalEtiq = totalSacas * custoEtiqUn;
