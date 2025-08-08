@@ -63,7 +63,7 @@ function calcularTotaisCustos() {
 
   const totalEmb = totalSacas * custoEmbUn;
   const totalEtiq = totalSacas * custoEtiqUn;
-  const totalDespesas = totalEmb + totalEtiq + custoOperacionais + custoEstoque;
+  const totalDespesas = totalEmb + totalEtiq + custoOperacionais + custoEstoque + custoFrete;
 
   document.getElementById("custoTotalEmbalagem").innerText = totalEmb.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
   document.getElementById("custoTotalEtiqueta").innerText = totalEtiq.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
