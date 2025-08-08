@@ -82,8 +82,219 @@
 
   <p><strong>Total de despesas extras:</strong> <span id="totalDespesasExtras">R$ 0,00</span></p>
 </div>
+<div class="box">
+  <h2>Box 3 – Como será a venda</h2>
 
-  
+  <label>Forma de venda:
+    <select id="vendaTipo" onchange="toggleVendaTipo()">
+      <option value="Saca">Saca</option>
+      <option value="Granel">Granel</option>
+    </select>
+  </label>
+
+  <div id="sacasBox">
+    <label>% em sacas de 25kg:
+      <input type="number" id="pct25" oninput="calcularSacas()" />
+    </label>
+
+    <label>% em sacas de 50kg:
+      <input type="number" id="pct50" oninput="calcularSacas()" />
+    </label>
+
+    <label>% em sacas de 60kg:
+      <input type="number" id="pct60" oninput="calcularSacas()" />
+    </label>
+
+    <p>Sacas 25kg: <span id="sacas25">0</span></p>
+    <p>Sacas 50kg: <span id="sacas50">0</span></p>
+    <p>Sacas 60kg: <span id="sacas60">0</span></p>
+  </div>
+</div>
+<div class="box">
+  <h2>Box 4 – Impostos por Estado</h2>
+
+  <ul>
+    <li><strong>SP:</strong> 6% (Simples Nacional)</li>
+    <li><strong>RJ:</strong> +12% DIFAL</li>
+    <li><strong>MG:</strong> +8% DIFAL</li>
+  </ul>
+</div>
+<div class="box">
+  <h2>Box 5 – Custos e Despesas Totais</h2>
+
+  <p><strong>Custo total de embalagem:</strong> <span id="custoTotalEmbalagem">R$ 0,00</span></p>
+  <p><strong>Custo total de etiqueta:</strong> <span id="custoTotalEtiqueta">R$ 0,00</span></p>
+  <p><strong>Custo total de despesas:</strong> <span id="custoTotalDespesas">R$ 0,00</span></p>
+</div>
+<div class="box">
+  <h2>Box 6 – Custos de Venda do Lote com Impostos</h2>
+
+  <p><strong>Preço total do lote com imposto SP:</strong> <span id="precoComImpostoSP">R$ 0,00</span></p>
+  <p><strong>Preço total do lote com imposto RJ:</strong> <span id="precoComImpostoRJ">R$ 0,00</span></p>
+  <p><strong>Preço total do lote com imposto MG:</strong> <span id="precoComImpostoMG">R$ 0,00</span></p>
+</div>
+<div class="box">
+  <h2>Box 7 – Preço de Custo por Saca</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>Saca 25kg</th>
+        <th>Saca 50kg</th>
+        <th>Saca 60kg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SP</td>
+        <td id="custoSaca25SP">—</td>
+        <td id="custoSaca50SP">—</td>
+        <td id="custoSaca60SP">—</td>
+      </tr>
+      <tr>
+        <td>RJ</td>
+        <td id="custoSaca25RJ">—</td>
+        <td id="custoSaca50RJ">—</td>
+        <td id="custoSaca60RJ">—</td>
+      </tr>
+      <tr>
+        <td>MG</td>
+        <td id="custoSaca25MG">—</td>
+        <td id="custoSaca50MG">—</td>
+        <td id="custoSaca60MG">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box">
+  <h2>Box 8 – Preço dos Concorrentes</h2>
+
+  <h3>Concorrente 1</h3>
+  <label>Saca 25kg (R$): <input type="number" id="conc1_25" /></label>
+  <label>Saca 50kg (R$): <input type="number" id="conc1_50" /></label>
+  <label>Saca 60kg (R$): <input type="number" id="conc1_60" /></label>
+
+  <h3>Concorrente 2</h3>
+  <label>Saca 25kg (R$): <input type="number" id="conc2_25" /></label>
+  <label>Saca 50kg (R$): <input type="number" id="conc2_50" /></label>
+  <label>Saca 60kg (R$): <input type="number" id="conc2_60" /></label>
+</div>
+<div class="box">
+  <h2>Box 9 – Margem de Lucro</h2>
+
+  <label>Margem de lucro desejada (%):
+    <input type="number" id="margemLucro" oninput="calcularPrecoComLucro()" />
+  </label>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>Saca 25kg</th>
+        <th>Saca 50kg</th>
+        <th>Saca 60kg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SP</td>
+        <td id="lucro25SP">—</td>
+        <td id="lucro50SP">—</td>
+        <td id="lucro60SP">—</td>
+      </tr>
+      <tr>
+        <td>RJ</td>
+        <td id="lucro25RJ">—</td>
+        <td id="lucro50RJ">—</td>
+        <td id="lucro60RJ">—</td>
+      </tr>
+      <tr>
+        <td>MG</td>
+        <td id="lucro25MG">—</td>
+        <td id="lucro50MG">—</td>
+        <td id="lucro60MG">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box">
+  <h2>Box 10 – Comparativo de Preços com Concorrentes</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Saca</th>
+        <th>Concorrente 1</th>
+        <th>Concorrente 2</th>
+        <th>Seu Preço SP</th>
+        <th>Seu Preço RJ</th>
+        <th>Seu Preço MG</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>25kg</td>
+        <td id="compConc1_25">—</td>
+        <td id="compConc2_25">—</td>
+        <td id="compLucro25SP">—</td>
+        <td id="compLucro25RJ">—</td>
+        <td id="compLucro25MG">—</td>
+      </tr>
+      <tr>
+        <td>50kg</td>
+        <td id="compConc1_50">—</td>
+        <td id="compConc2_50">—</td>
+        <td id="compLucro50SP">—</td>
+        <td id="compLucro50RJ">—</td>
+        <td id="compLucro50MG">—</td>
+      </tr>
+      <tr>
+        <td>60kg</td>
+        <td id="compConc1_60">—</td>
+        <td id="compConc2_60">—</td>
+        <td id="compLucro60SP">—</td>
+        <td id="compLucro60RJ">—</td>
+        <td id="compLucro60MG">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box">
+  <h2>Box 11 – Lucro da Operação</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Estado</th>
+        <th>Lucro 25kg</th>
+        <th>Lucro 50kg</th>
+        <th>Lucro 60kg</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SP</td>
+        <td id="lucroFinal25SP">—</td>
+        <td id="lucroFinal50SP">—</td>
+        <td id="lucroFinal60SP">—</td>
+      </tr>
+      <tr>
+        <td>RJ</td>
+        <td id="lucroFinal25RJ">—</td>
+        <td id="lucroFinal50RJ">—</td>
+        <td id="lucroFinal60RJ">—</td>
+      </tr>
+      <tr>
+        <td>MG</td>
+        <td id="lucroFinal25MG">—</td>
+        <td id="lucroFinal50MG">—</td>
+        <td id="lucroFinal60MG">—</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
   <script src="script.js"></script>
 </body>
 </html>
