@@ -20,3 +20,14 @@ input, select {
   width: 100%;
   margin-top: 4px;
 }
+.box ul {
+  list-style: none;
+  padding-left: 0;
+}
+.box ul li {
+  background: #f0f0f0;
+  padding: 8px;
+  margin: 6px 0;
+  border-left: 4px solid #1f3c88;
+  font-size: 16px;
+}
